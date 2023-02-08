@@ -1,35 +1,29 @@
-import type { Category, Word } from '@/typings';
+import type { GetServerSideProps, NextPage } from 'next';
+import type { Database } from '@/typings/supabase';
 import Head from 'next/head';
-import { Col, Row } from 'antd';
-import { WordsTable } from '@/components/WordsTable';
-import { GetServerSideProps, NextPage } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { mapCategory, mapWord } from '@/utils/supabase';
 import { Header } from '@/components/Header';
-import { Database } from '@/typings/supabase';
+import { WordsTable } from '@/components/WordsTable';
 
-type Props = {
-  words: Word[];
-  categories: Category[];
-};
-
-const HomePage: NextPage<Props> = ({ words, categories }) => {
+const HomePage: NextPage = () => {
   return (
     <>
       <Head key="HomePage">
         <title>Speak Georgian Manager</title>
+        <meta
+          name="description"
+          content="This is a dashboard to manage Speak Georgian App"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Row justify="center">
-        <Col xs={24} lg={20} xl={18}>
-          <WordsTable words={words} categories={categories} />
-        </Col>
-      </Row>
+      <WordsTable />
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const supabase = createServerSupabaseClient<Database>(ctx);
   const {
     data: { session },
@@ -44,25 +38,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
     };
   }
 
-  const wordsResponse = await supabase.from('words').select();
-  const categoriesResponse = await supabase.from('categories').select();
-
-  if (wordsResponse.error || categoriesResponse.error) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const words = wordsResponse.data.map(mapWord);
-  const categories = categoriesResponse.data.map(mapCategory);
-
-  console.log(categories);
-
   return {
-    props: {
-      words,
-      categories,
-    },
+    props: {},
   };
 };
 

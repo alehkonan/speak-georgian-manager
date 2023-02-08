@@ -1,3 +1,8 @@
+export type Response<Data> = {
+  data?: Data;
+  errorMessage?: string;
+};
+
 export type Category = {
   id: number;
   name: string;

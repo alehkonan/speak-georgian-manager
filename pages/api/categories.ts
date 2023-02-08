@@ -1,20 +1,16 @@
-import type { Response, Word } from '@/typings';
-import { Database } from '@/typings/supabase';
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { NextApiHandler } from 'next';
+import type { Database } from '@/typings/supabase';
+import type { Category, Response } from '@/typings';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
-type DatabaseWord = Database['public']['Tables']['words']['Row'];
+type DatabaseCategory = Database['public']['Tables']['categories']['Row'];
 
-export const mapWord = (word: DatabaseWord): Word => ({
-  id: word.id,
-  en: word.name_en,
-  ka: word.name_ka,
-  categoryId: word.category_id,
-  pictureUrl: word.picture_url,
-  transcription: word.transcription,
+export const mapCategory = (category: DatabaseCategory): Category => ({
+  id: category.id,
+  name: category.name,
 });
 
-const handler: NextApiHandler<Response<Word[]>> = async (req, res) => {
+const handler: NextApiHandler<Response<Category[]>> = async (req, res) => {
   const supabase = createServerSupabaseClient<Database>({ req, res });
 
   const {
@@ -36,7 +32,7 @@ const handler: NextApiHandler<Response<Word[]>> = async (req, res) => {
 
   switch (req.method) {
     case 'GET':
-      const { data, error } = await supabase.from('words').select();
+      const { data, error } = await supabase.from('categories').select();
 
       if (error) {
         return res.status(500).json({
@@ -44,9 +40,9 @@ const handler: NextApiHandler<Response<Word[]>> = async (req, res) => {
         });
       }
 
-      const words = data.map(mapWord);
+      const categories = data.map(mapCategory);
 
-      return res.json({ data: words });
+      return res.json({ data: categories });
 
     default:
       return res.status(400).json({
