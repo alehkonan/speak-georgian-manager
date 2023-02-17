@@ -1,20 +1,10 @@
-import type { Category, Word } from '@/typings';
+import { useWords } from '@/reactQuery/words';
 import { Col, Row, Table } from 'antd';
-import { useQuery } from '@tanstack/react-query';
-import { handleRequest } from '@/utils';
 import { useColumns } from './useColumns';
 
 export const WordsTable = () => {
-  const { data: words, isLoading: isLoadingWords } = useQuery({
-    queryKey: ['words'],
-    queryFn: ({ signal }) => handleRequest<Word[]>('/api/words', { signal }),
-  });
-  const { data: categories, isLoading: isLoadingCategories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: ({ signal }) =>
-      handleRequest<Category[]>('/api/categories', { signal }),
-  });
-  const columns = useColumns({ categories });
+  const { words, isLoading } = useWords();
+  const columns = useColumns();
 
   return (
     <Row justify="center">
@@ -24,7 +14,7 @@ export const WordsTable = () => {
           columns={columns}
           dataSource={words}
           scroll={{ x: 1000 }}
-          loading={isLoadingWords || isLoadingCategories}
+          loading={isLoading}
           rowSelection={{
             type: 'checkbox',
           }}
