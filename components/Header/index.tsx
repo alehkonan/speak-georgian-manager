@@ -1,7 +1,13 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
-import { Button, Col, Row, Typography } from 'antd';
+import { Button, Col, Menu, Row, Typography, MenuProps } from 'antd';
 import { useRouter } from 'next/router';
 import styles from './styles.module.css';
+
+const menuItems: MenuProps['items'] = [
+  { key: '/words', label: 'words' },
+  { key: '/verbs', label: 'verbs' },
+  { key: '/phrases', label: 'phrases' },
+];
 
 export const Header = () => {
   const user = useUser();
@@ -15,7 +21,15 @@ export const Header = () => {
 
   return (
     <div className={styles.container}>
-      <Row justify="end" align="middle" gutter={[10, 0]}>
+      <Row align="middle" gutter={10}>
+        <Col flex={1}>
+          <Menu
+            onClick={({ key }) => router.push(key)}
+            mode="horizontal"
+            items={menuItems}
+            defaultSelectedKeys={[router.asPath]}
+          />
+        </Col>
         <Col>
           <Typography.Text>logged as {user?.email}</Typography.Text>
         </Col>

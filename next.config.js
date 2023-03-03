@@ -4,6 +4,13 @@ const nextConfig = {
   images: {
     domains: ['sjvxbuqvopcxcdetqebf.supabase.co'],
   },
+  redirects: async () => [
+    {
+      source: '/',
+      destination: '/words',
+      permanent: true,
+    },
+  ],
 };
 
 module.exports = nextConfig;

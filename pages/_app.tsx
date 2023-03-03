@@ -6,6 +6,7 @@ import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { Session, SessionContextProvider } from '@supabase/auth-helpers-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Layout } from '@/layout';
 
 type Props = AppProps<{ initialSession: Session }>;
 
@@ -29,7 +30,9 @@ const App = ({ Component, pageProps }: Props) => {
       initialSession={pageProps.initialSession}
     >
       <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </SessionContextProvider>

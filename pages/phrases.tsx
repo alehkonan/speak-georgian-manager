@@ -1,15 +1,12 @@
-import type { GetServerSideProps, NextPage } from 'next';
-import type { Database } from '@/typings/supabase';
-import Head from 'next/head';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { Header } from '@/components/Header';
-import { WordsTable } from '@/components/WordsTable';
+import { GetServerSideProps, NextPage } from 'next';
+import Head from 'next/head';
 
-const HomePage: NextPage = () => {
+const PhrasesPage: NextPage = () => {
   return (
     <>
-      <Head key="HomePage">
-        <title>Speak Georgian Manager</title>
+      <Head key="VerbsPage">
+        <title>Speak Georgian Manager | Phrases</title>
         <meta
           name="description"
           content="This is a dashboard to manage Speak Georgian App"
@@ -17,14 +14,15 @@ const HomePage: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      <WordsTable />
+      <div>
+        <p>Phrases</p>
+      </div>
     </>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const supabase = createServerSupabaseClient<Database>(ctx);
+  const supabase = createServerSupabaseClient(ctx);
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -43,4 +41,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default HomePage;
+export default PhrasesPage;
