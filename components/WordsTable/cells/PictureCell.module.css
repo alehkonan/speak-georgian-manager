@@ -1,0 +1,4 @@
+.picture {
+  cursor: pointer;
+  object-fit: cover;
+}

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from './keys';
 
 export const useWords = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: queryKeys.words,
     queryFn: ({ signal }) => handleRequest<Word[]>('/api/words', { signal }),
   });
@@ -12,6 +12,5 @@ export const useWords = () => {
   return {
     words: data,
     isLoading,
-    error: error instanceof Error ? error : null,
   };
 };

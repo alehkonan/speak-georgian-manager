@@ -12,7 +12,7 @@ export const KaWordCell = ({ word }: Props) => {
 
   useEffect(() => setKaWord(word.ka), [word]);
 
-  const { update, isUpdating } = useWord();
+  const { updateWord, isUpdating } = useWord();
 
   return (
     <Space align="center">
@@ -22,7 +22,7 @@ export const KaWordCell = ({ word }: Props) => {
           onChange: (value) => {
             if (value === word.ka) return;
             setKaWord(value);
-            update({ id: word.id, ka: value });
+            updateWord({ id: word.id, ka: value });
           },
         }}
       >

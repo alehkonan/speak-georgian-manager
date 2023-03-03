@@ -12,7 +12,7 @@ export const TranscriptionCell = ({ word }: Props) => {
 
   useEffect(() => setTranscription(word.transcription), [word]);
 
-  const { update, isUpdating } = useWord();
+  const { updateWord, isUpdating } = useWord();
 
   return (
     <Space align="center">
@@ -22,7 +22,7 @@ export const TranscriptionCell = ({ word }: Props) => {
           onChange: (value) => {
             if (value === word.transcription) return;
             setTranscription(value);
-            update({ id: word.id, transcription: value });
+            updateWord({ id: word.id, transcription: value });
           },
         }}
       >
