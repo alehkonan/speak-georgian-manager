@@ -1,4 +1,5 @@
 import type { Word } from '@/typings';
+import { Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useMemo } from 'react';
 import {
@@ -8,6 +9,7 @@ import {
   PictureCell,
   TranscriptionCell,
 } from './cells';
+import { ActionCell } from './cells/ActionCell';
 
 export const useColumns = () => {
   const columns = useMemo<ColumnsType<Word>>(
@@ -15,7 +17,7 @@ export const useColumns = () => {
       {
         title: 'English word',
         dataIndex: 'en',
-        width: '20%',
+        width: 200,
         sorter: (a, b) => a.en.toLowerCase().localeCompare(b.en.toLowerCase()),
         showSorterTooltip: false,
         render: (_, word) => <EnWordCell word={word} />,
@@ -23,7 +25,7 @@ export const useColumns = () => {
       {
         title: 'Georgian word',
         dataIndex: 'ka',
-        width: '20%',
+        width: 200,
         sorter: (a, b) => a.ka.toLowerCase().localeCompare(b.ka.toLowerCase()),
         showSorterTooltip: false,
         render: (_, word) => <KaWordCell word={word} />,
@@ -31,20 +33,24 @@ export const useColumns = () => {
       {
         title: 'Transcription',
         dataIndex: 'transcription',
-        width: '20%',
+        width: 200,
         render: (_, word) => <TranscriptionCell word={word} />,
       },
       {
         title: 'Category',
         dataIndex: 'categoryId',
-        width: '20%',
+        width: 200,
         render: (_, word) => <CategoryCell word={word} />,
       },
       {
         title: 'Picture',
         dataIndex: 'pictureUrl',
-        width: '10%',
+        width: 150,
         render: (_, word) => <PictureCell word={word} />,
+      },
+      {
+        width: 50,
+        render: (_, word) => <ActionCell wordId={word.id} />,
       },
     ],
     []

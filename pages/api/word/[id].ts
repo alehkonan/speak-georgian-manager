@@ -64,9 +64,25 @@ const handler: NextApiHandler<Response<Word>> = async (req, res) => {
       return res.status(404).json({ errorMessage: 'Word is not found' });
     }
 
-    console.log(data);
-
     return res.json({ data: data.map(mapWord).at(0) });
+  }
+
+  if (req.method === 'DELETE') {
+    const wordId = Number(req.query.id);
+
+    if (!wordId) {
+      return res.status(400).json({ errorMessage: 'Word id is not defined' });
+    }
+
+    const { error } = await supabase.from('words').delete().eq('id', wordId);
+
+    if (error) {
+      return res.status(500).json({
+        errorMessage: error.message,
+      });
+    }
+
+    return res.status(204).end();
   }
 
   return res.status(400).json({
