@@ -5,7 +5,18 @@ export const handleRequest = async <Data extends unknown>(
   requestInit?: RequestInit
 ) => {
   const response = await fetch(url, requestInit);
-  const data: Response<Data> = await response.json();
-  if (!response.ok) throw new Error(data.errorMessage);
-  return data.data;
+
+  switch (response.status) {
+    case 204:
+    case 304:
+      return undefined;
+
+    case 500:
+      throw new Error('Server Error');
+
+    default:
+      const data: Response<Data> = await response.json();
+      if (!response.ok) throw new Error(data.errorMessage);
+      return data.data;
+  }
 };

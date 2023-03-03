@@ -7,6 +7,7 @@ import { Session, SessionContextProvider } from '@supabase/auth-helpers-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Layout } from '@/layout';
+import { message } from 'antd';
 
 type Props = AppProps<{ initialSession: Session }>;
 
@@ -17,8 +18,16 @@ const App = ({ Component, pageProps }: Props) => {
       new QueryClient({
         defaultOptions: {
           queries: {
+            retry: false,
             refetchOnWindowFocus: false,
             refetchOnMount: false,
+            refetchOnReconnect: false,
+            onError: (error) =>
+              error instanceof Error && message.error(error.message),
+          },
+          mutations: {
+            onError: (error) =>
+              error instanceof Error && message.error(error.message),
           },
         },
       })

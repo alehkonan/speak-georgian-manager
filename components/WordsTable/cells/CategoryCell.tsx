@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useCategories } from '@/reactQuery/categories';
 import { useWord } from '@/reactQuery/word';
 import { Category, Word } from '@/typings';
@@ -16,7 +16,7 @@ const mapToOptions = (category: Category): DefaultOptionType => ({
 
 export const CategoryCell = ({ word }: Props) => {
   const { categories, isLoading } = useCategories();
-  const { update, isUpdating } = useWord();
+  const { updateWord, isUpdating } = useWord();
 
   const categoryOptions = useMemo(
     () => categories?.map(mapToOptions),
@@ -29,7 +29,7 @@ export const CategoryCell = ({ word }: Props) => {
       options={categoryOptions}
       loading={isLoading || isUpdating}
       value={word.categoryId}
-      onChange={(value) => update({ id: word.id, categoryId: value })}
+      onChange={(value) => updateWord({ id: word.id, categoryId: value })}
     />
   );
 };

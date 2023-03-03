@@ -12,7 +12,7 @@ export const EnWordCell = ({ word }: Props) => {
 
   useEffect(() => setEnWord(word.en), [word]);
 
-  const { update, isUpdating } = useWord();
+  const { updateWord, isUpdating } = useWord();
 
   return (
     <Space align="center">
@@ -22,7 +22,7 @@ export const EnWordCell = ({ word }: Props) => {
           onChange: (value) => {
             if (value === word.en) return;
             setEnWord(value);
-            update({ id: word.id, en: value });
+            updateWord({ id: word.id, en: value });
           },
         }}
       >

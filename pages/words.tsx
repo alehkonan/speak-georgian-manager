@@ -1,7 +1,7 @@
+import type { GetServerSideProps, NextPage } from 'next';
+import Head from 'next/head';
 import { WordsTable } from '@/components/WordsTable';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { GetServerSideProps, NextPage } from 'next';
-import Head from 'next/head';
 
 const WordsPage: NextPage = () => {
   return (
