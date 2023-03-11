@@ -45,3 +45,29 @@ export const useWord = () => {
     isDeleting,
   };
 };
+
+export const useAddWord = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (word: Omit<Word, 'id'>) => {
+      const data = await handleRequest<Word[]>('api/words', {
+        method: 'POST',
+        body: JSON.stringify(word),
+      });
+      return data;
+    },
+    onSuccess: (createdWords) => {
+      queryClient.setQueryData<Word[]>(
+        queryKeys.words,
+        (words) => words && createdWords && [...words, ...createdWords]
+      );
+      message.success('Word has been added');
+    },
+  });
+
+  return {
+    addWord: mutate,
+    isAdding: isLoading,
+  };
+};

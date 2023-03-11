@@ -1,7 +1,7 @@
+import type { NextApiHandler } from 'next';
 import type { Response, Word } from '@/typings';
 import { Database } from '@/typings/supabase';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import type { NextApiHandler } from 'next';
 
 type DatabaseWord = Database['public']['Tables']['words']['Row'];
 
@@ -47,6 +47,27 @@ const handler: NextApiHandler<Response<Word[]>> = async (req, res) => {
       const words = data.map(mapWord);
 
       return res.json({ data: words });
+
+    case 'POST':
+      const word = JSON.parse(req.body) as Omit<Word, 'id'>;
+
+      const insertRequest = await supabase
+        .from('words')
+        .insert({
+          name_en: word.en,
+          name_ka: word.ka,
+          transcription: word.transcription,
+          category_id: word.categoryId,
+        })
+        .select();
+
+      if (insertRequest.error) {
+        return res.status(500).json({
+          errorMessage: insertRequest.error.message,
+        });
+      }
+
+      return res.json({ data: insertRequest.data.map(mapWord) });
 
     default:
       return res.status(400).json({
