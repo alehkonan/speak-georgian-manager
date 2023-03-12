@@ -17,9 +17,8 @@ export const AddNewWord = () => {
   const { categories, isLoading } = useCategories();
   const { addWord, isAdding } = useAddWord();
 
-  const onFinish = async (values: FormValues) => {
-    const createdWord = await addWord({ ...values, pictureUrl: null });
-    console.log(createdWord);
+  const onFinish = (values: FormValues) => {
+    addWord({ ...values, pictureUrl: null });
     setOpen(false);
   };
 

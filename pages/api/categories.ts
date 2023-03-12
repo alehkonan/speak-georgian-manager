@@ -32,7 +32,10 @@ const handler: NextApiHandler<Response<Category[]>> = async (req, res) => {
 
   switch (req.method) {
     case 'GET':
-      const { data, error } = await supabase.from('categories').select();
+      const { data, error } = await supabase
+        .from('categories')
+        .select()
+        .order('name', { ascending: true });
 
       if (error) {
         return res.status(500).json({
@@ -43,6 +46,22 @@ const handler: NextApiHandler<Response<Category[]>> = async (req, res) => {
       const categories = data.map(mapCategory);
 
       return res.json({ data: categories });
+
+    case 'POST':
+      const newCategory = JSON.parse(req.body) as Omit<Category, 'id'>;
+
+      const insertRequest = await supabase
+        .from('categories')
+        .insert({ name: newCategory.name })
+        .select();
+
+      if (insertRequest.error) {
+        return res.status(500).json({
+          errorMessage: insertRequest.error.message,
+        });
+      }
+
+      return res.json({ data: insertRequest.data.map(mapCategory) });
 
     default:
       return res.status(400).json({

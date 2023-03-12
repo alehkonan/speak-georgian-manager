@@ -1,6 +1,7 @@
 import type { Category } from '@/typings';
 import { handleRequest } from '@/utils';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { message } from 'antd';
 import { queryKeys } from './keys';
 
 export const useCategories = () => {
@@ -13,5 +14,33 @@ export const useCategories = () => {
   return {
     categories: data,
     isLoading,
+  };
+};
+
+export const useAddCategory = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (category: Omit<Category, 'id'>) => {
+      const data = await handleRequest<Category[]>('api/categories', {
+        method: 'POST',
+        body: JSON.stringify(category),
+      });
+      return data;
+    },
+    onSuccess: (createdCategories) => {
+      queryClient.setQueryData<Category[]>(
+        queryKeys.categories,
+        (categories) =>
+          categories &&
+          createdCategories && [...categories, ...createdCategories]
+      );
+      message.success('Category has been added');
+    },
+  });
+
+  return {
+    addCategory: mutate,
+    isAddingCategory: isLoading,
   };
 };
