@@ -1,0 +1,15 @@
+.container {
+  padding: 1px;
+}
+
+.table {
+  margin: 0 auto;
+}
+
+.row {
+  border-bottom: 1px solid #b9b9b9;
+}
+
+.cell {
+  padding: 4px 8px;
+}

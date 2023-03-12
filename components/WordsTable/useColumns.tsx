@@ -1,7 +1,6 @@
 import type { Word } from '@/typings';
-import { Button } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
 import { useMemo } from 'react';
+import { createColumnHelper } from '@tanstack/react-table';
 import {
   CategoryCell,
   EnWordCell,
@@ -11,47 +10,35 @@ import {
 } from './cells';
 import { ActionCell } from './cells/ActionCell';
 
+const columnHelper = createColumnHelper<Word>();
+
 export const useColumns = () => {
-  const columns = useMemo<ColumnsType<Word>>(
+  const columns = useMemo(
     () => [
-      {
-        title: 'English word',
-        dataIndex: 'en',
-        width: 200,
-        sorter: (a, b) => a.en.toLowerCase().localeCompare(b.en.toLowerCase()),
-        showSorterTooltip: false,
-        render: (_, word) => <EnWordCell word={word} />,
-      },
-      {
-        title: 'Georgian word',
-        dataIndex: 'ka',
-        width: 200,
-        sorter: (a, b) => a.ka.toLowerCase().localeCompare(b.ka.toLowerCase()),
-        showSorterTooltip: false,
-        render: (_, word) => <KaWordCell word={word} />,
-      },
-      {
-        title: 'Transcription',
-        dataIndex: 'transcription',
-        width: 200,
-        render: (_, word) => <TranscriptionCell word={word} />,
-      },
-      {
-        title: 'Category',
-        dataIndex: 'categoryId',
-        width: 200,
-        render: (_, word) => <CategoryCell word={word} />,
-      },
-      {
-        title: 'Picture',
-        dataIndex: 'pictureUrl',
-        width: 150,
-        render: (_, word) => <PictureCell word={word} />,
-      },
-      {
-        width: 50,
-        render: (_, word) => <ActionCell wordId={word.id} />,
-      },
+      columnHelper.accessor('en', {
+        header: () => 'English word',
+        cell: ({ row }) => <EnWordCell word={row.original} />,
+      }),
+      columnHelper.accessor('ka', {
+        header: () => 'Georgian word',
+        cell: ({ row }) => <KaWordCell word={row.original} />,
+      }),
+      columnHelper.accessor('transcription', {
+        header: () => 'Transcription',
+        cell: ({ row }) => <TranscriptionCell word={row.original} />,
+      }),
+      columnHelper.accessor('categoryId', {
+        header: () => 'Category',
+        cell: ({ row }) => <CategoryCell word={row.original} />,
+      }),
+      columnHelper.accessor('pictureUrl', {
+        header: () => 'Picture',
+        cell: ({ row }) => <PictureCell word={row.original} />,
+      }),
+      columnHelper.accessor('id', {
+        header: () => null,
+        cell: (ctx) => <ActionCell wordId={ctx.getValue()} />,
+      }),
     ],
     []
   );
