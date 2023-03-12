@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 import { transliterate } from '@/services/transliteration';
 import { useCategories } from 'reactQuery/categories';
 import { useAddWord } from '@/reactQuery/word';
@@ -14,7 +14,7 @@ type FormValues = {
 export const AddNewWord = () => {
   const [isOpen, setOpen] = useState(false);
   const [form] = Form.useForm<FormValues>();
-  const { categories, isLoading } = useCategories();
+  const { categories } = useCategories();
   const { addWord, isAdding } = useAddWord();
 
   const onFinish = (values: FormValues) => {
@@ -79,11 +79,13 @@ export const AddNewWord = () => {
             label="Category"
             rules={[{ required: true, message: 'Category must be selected' }]}
           >
-            <Select
-              options={categories}
-              fieldNames={{ value: 'id', label: 'name' }}
-              loading={isLoading}
-            />
+            <select>
+              {categories?.map(({ id, name }) => (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              ))}
+            </select>
           </Form.Item>
         </Form>
       </Modal>
