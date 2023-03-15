@@ -1,65 +1,54 @@
-import { useState, FormEvent, useRef } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useState } from 'react';
+import ReactFocusLock from 'react-focus-lock';
+import { useForm } from 'react-hook-form';
 import { useAddCategory } from 'reactQuery/categories';
 import styles from './styles.module.css';
 
+type FormValues = {
+  name: string;
+};
+
 export const AddNewCategory = () => {
   const [isOpen, setOpen] = useState(false);
-  const { addCategory, isAddingCategory } = useAddCategory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+  const { addCategory } = useAddCategory();
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (Object.hasOwn(e.target, FormValues.Name)) {
-      console.log(e.target[FormValues.Name]);
-    }
-    // addCategory({ name: values.name });
-    // setOpen(false);
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    addCategory(data);
+    setOpen(false);
   };
 
   return (
-    <div>
+    <>
       <button onClick={() => setOpen(true)}>Add new category</button>
-      <dialog open={isOpen}>
-        <button onClick={() => setOpen(false)}>Close modal</button>
-        <form className={styles.form} onSubmit={onSubmit}>
-          <label>
-            <span>Category name</span>
-            <input type="text" name={FormValues.Name} />
-          </label>
-          <label>
-            <span>sdcds name</span>
-            <input type="text" name={FormValues.Surname} />
-          </label>
-          <button>Add</button>
-        </form>
-      </dialog>
-      {/* <Modal
-        title="Add a new category to the table"
-        open={isOpen}
-        centered
-        closable={false}
-        confirmLoading={isAddingCategory}
-        okText="Add"
-        onCancel={() => setOpen(false)}
-        onOk={form.submit}
-      >
-        <Form
-          form={form}
-          onFinish={onFinish}
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          preserve={false}
-          labelAlign="left"
-          autoComplete="off"
-        >
-          <Form.Item
-            name="name"
-            label="Category name"
-            rules={[{ required: true, message: 'Name must be provided' }]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
-      </Modal> */}
-    </div>
+      <ReactFocusLock>
+        <dialog open={isOpen} className={styles.dialog}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label className={styles.formItem}>
+                <span>Category name</span>
+                <input
+                  type="text"
+                  autoComplete="off"
+                  {...register('name', { required: true })}
+                />
+              </label>
+              {errors.name && (
+                <span className={styles.error}>Name is required</span>
+              )}
+            </div>
+            <div className={styles.formItem}>
+              <button type="submit">Add</button>
+              <button onClick={() => setOpen(false)}>Cancel</button>
+            </div>
+          </form>
+        </dialog>
+      </ReactFocusLock>
+    </>
   );
 };

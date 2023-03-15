@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { WordsTable } from '@/features/WordsTable';
 import { AddNewCategory } from '@/features/AddNewCategory';
+import { AddNewWord } from '@/features/AddNewWord';
 
 const WordsPage: NextPage = () => {
   return (
@@ -16,7 +17,10 @@ const WordsPage: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AddNewCategory />
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <AddNewCategory />
+        <AddNewWord />
+      </div>
       <WordsTable />
     </>
   );

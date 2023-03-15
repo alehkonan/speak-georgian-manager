@@ -1,10 +1,9 @@
-import { PropsWithChildren, useEffect } from 'react';
+import type { PropsWithChildren } from 'react';
 import { useSession } from '@supabase/auth-helpers-react';
 import Link from 'next/link';
-
 import { useNavigation } from './useNavigation';
-import styles from './styles.module.css';
 import { useLogout } from '@/reactQuery/logout';
+import styles from './styles.module.css';
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const session = useSession();

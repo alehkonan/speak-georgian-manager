@@ -1,34 +1,27 @@
-import { useWord } from '@/reactQuery/word';
-import { Word } from '@/typings';
-import { Typography, Spin, Space } from 'antd';
+import type { Word } from '@/typings';
 import { useEffect, useState } from 'react';
+import { useWord } from '@/reactQuery/word';
 
 type Props = {
   word: Word;
 };
 
 export const KaWordCell = ({ word }: Props) => {
+  const { updateWord } = useWord();
   const [kaWord, setKaWord] = useState(word.ka);
 
   useEffect(() => setKaWord(word.ka), [word]);
 
-  const { updateWord, isUpdating } = useWord();
-
   return (
-    <Space align="center">
-      <Typography.Text
-        editable={{
-          text: word.ka,
-          onChange: (value) => {
-            if (value === word.ka) return;
-            setKaWord(value);
-            updateWord({ id: word.id, ka: value });
-          },
-        }}
-      >
-        {kaWord}
-      </Typography.Text>
-      <Spin size="small" spinning={isUpdating} />
-    </Space>
+    <div>
+      <input
+        type="text"
+        value={kaWord}
+        onChange={({ target }) => setKaWord(target.value)}
+      />
+      <button onClick={() => updateWord({ id: word.id, ka: kaWord })}>
+        Change
+      </button>
+    </div>
   );
 };

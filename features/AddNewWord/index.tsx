@@ -1,94 +1,111 @@
-import { useState } from 'react';
-import { Button, Form, Input, Modal } from 'antd';
+import type { SubmitHandler } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import ReactFocusLock from 'react-focus-lock';
 import { transliterate } from '@/services/transliteration';
 import { useCategories } from 'reactQuery/categories';
 import { useAddWord } from '@/reactQuery/word';
+import { useForm } from 'react-hook-form';
+import styles from './styles.module.css';
 
 type FormValues = {
   en: string;
   ka: string;
   transcription: string;
   categoryId: number;
+  pictureUrl: string | null;
 };
 
 export const AddNewWord = () => {
   const [isOpen, setOpen] = useState(false);
-  const [form] = Form.useForm<FormValues>();
   const { categories } = useCategories();
-  const { addWord, isAdding } = useAddWord();
+  const { addWord } = useAddWord();
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({ defaultValues: { pictureUrl: null } });
 
-  const onFinish = (values: FormValues) => {
-    addWord({ ...values, pictureUrl: null });
+  const georgianWord = watch('ka');
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    addWord(data);
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (georgianWord !== undefined) {
+      setValue('transcription', transliterate(georgianWord));
+    }
+  }, [georgianWord, setValue]);
+
   return (
-    <div>
-      <Button onClick={() => setOpen(true)}>Add new word</Button>
-      <Modal
-        title="Add a new word to the table"
-        open={isOpen}
-        centered
-        closable={false}
-        confirmLoading={isAdding}
-        okText="Add"
-        onCancel={() => setOpen(false)}
-        onOk={form.submit}
-      >
-        <Form
-          form={form}
-          onFinish={onFinish}
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          preserve={false}
-          labelAlign="left"
-          autoComplete="off"
-        >
-          <Form.Item
-            name="en"
-            label="English word"
-            rules={[{ required: true, message: 'Word must be provided' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="ka"
-            label="Georgian word"
-            rules={[
-              { required: true, message: 'Word must be provided' },
-              {
-                pattern: /^[ა-ჰ_ -]*$/g,
-                message: 'Word must be georgian',
-              },
-            ]}
-          >
-            <Input
-              onChange={(e) =>
-                form.setFieldValue(
-                  'transcription',
-                  transliterate(e.target.value)
-                )
-              }
-            />
-          </Form.Item>
-          <Form.Item name="transcription" label="Transcription">
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="categoryId"
-            label="Category"
-            rules={[{ required: true, message: 'Category must be selected' }]}
-          >
-            <select>
-              {categories?.map(({ id, name }) => (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              ))}
-            </select>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </div>
+    <>
+      <button onClick={() => setOpen(true)}>Add new word</button>
+      <ReactFocusLock>
+        <dialog open={isOpen} className={styles.dialog}>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <label className={styles.formItem}>
+                <span>English word</span>
+                <input
+                  type="text"
+                  autoComplete="off"
+                  {...register('en', { required: true })}
+                />
+              </label>
+              {errors.en && (
+                <span className={styles.error}>English word is required</span>
+              )}
+            </div>
+            <div>
+              <label className={styles.formItem}>
+                <span>Georgian word</span>
+                <input
+                  type="text"
+                  autoComplete="off"
+                  {...register('ka', {
+                    required: true,
+                    pattern: /^[ა-ჰ_ -]*$/g,
+                  })}
+                />
+              </label>
+              {errors.ka && (
+                <span className={styles.error}>
+                  Georgian word is required and should be in georgian
+                </span>
+              )}
+            </div>
+            <div>
+              <label className={styles.formItem}>
+                <span>Transcription</span>
+                <input
+                  type="text"
+                  autoComplete="off"
+                  {...register('transcription')}
+                />
+              </label>
+            </div>
+            <div>
+              <label className={styles.formItem}>
+                <span>Category</span>
+                <select {...register('categoryId')}>
+                  {categories?.map(({ id, name }) => (
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className={styles.formItem}>
+              <button type="submit">Add</button>
+              <button onClick={() => setOpen(false)}>Cancel</button>
+            </div>
+          </form>
+        </dialog>
+      </ReactFocusLock>
+    </>
   );
 };

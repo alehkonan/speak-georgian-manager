@@ -1,7 +1,6 @@
 import type { Word } from '@/typings';
 import { handleRequest } from '@/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { message } from 'antd';
 import { queryKeys } from './keys';
 
 export const useWord = () => {
@@ -20,7 +19,6 @@ export const useWord = () => {
           word.id === newWord.id ? { ...word, ...newWord } : word
         )
       );
-      message.success(`Word ${newWord.en} has been updated`);
     },
   });
 
@@ -34,7 +32,6 @@ export const useWord = () => {
       queryClient.setQueryData<Word[]>(queryKeys.words, (words) =>
         words?.filter((word) => word.id !== wordId)
       );
-      message.success('Word has been deleted');
     },
   });
 
@@ -62,7 +59,6 @@ export const useAddWord = () => {
         queryKeys.words,
         (words) => words && createdWords && [...words, ...createdWords]
       );
-      message.success('Word has been added');
     },
   });
 
