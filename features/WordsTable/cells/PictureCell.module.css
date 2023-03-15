@@ -2,3 +2,7 @@
   cursor: pointer;
   object-fit: cover;
 }
+
+.file {
+  width: 70px;
+}

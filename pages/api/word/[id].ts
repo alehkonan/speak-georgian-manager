@@ -1,7 +1,7 @@
 import type { Response, Word } from '@/typings';
-import { Database } from '@/typings/supabase';
-import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { NextApiHandler } from 'next';
+import type { Database } from '@/typings/supabase';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 type DatabaseWord = Database['public']['Tables']['words']['Row'];
 

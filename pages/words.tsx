@@ -1,10 +1,9 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { Divider, Space } from 'antd';
-import { WordsTable } from '@/components/WordsTable';
-import { AddNewWord } from '@/components/AddNewWord';
-import { AddNewCategory } from '@/components/AddNewCategory';
+import { WordsTable } from '@/features/WordsTable';
+import { AddNewCategory } from '@/features/AddNewCategory';
+import { AddNewWord } from '@/features/AddNewWord';
 
 const WordsPage: NextPage = () => {
   return (
@@ -18,11 +17,10 @@ const WordsPage: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Space align="center">
+      <div style={{ display: 'flex', gap: '8px' }}>
         <AddNewCategory />
         <AddNewWord />
-      </Space>
-      <Divider />
+      </div>
       <WordsTable />
     </>
   );

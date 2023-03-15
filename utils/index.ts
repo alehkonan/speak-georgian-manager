@@ -1,4 +1,4 @@
-import { Response } from '@/typings';
+import type { Response } from '@/typings';
 
 export const handleRequest = async <Data extends unknown>(
   url: RequestInfo | URL,

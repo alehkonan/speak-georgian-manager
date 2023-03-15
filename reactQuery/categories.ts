@@ -1,7 +1,6 @@
 import type { Category } from '@/typings';
 import { handleRequest } from '@/utils';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { message } from 'antd';
 import { queryKeys } from './keys';
 
 export const useCategories = () => {
@@ -35,7 +34,6 @@ export const useAddCategory = () => {
           categories &&
           createdCategories && [...categories, ...createdCategories]
       );
-      message.success('Category has been added');
     },
   });
 

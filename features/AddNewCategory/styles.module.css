@@ -1,0 +1,28 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 1px 1px 4px grey;
+}
+
+.dialog::backdrop {
+  backdrop-filter: blur(10px);
+}
+
+.form {
+  display: grid;
+  gap: 8px;
+}
+
+.formItem {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.error {
+  font-size: 0.8rem;
+  color: red;
+}
