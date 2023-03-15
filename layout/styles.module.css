@@ -1,3 +1,28 @@
-.container {
-  padding: 0.5rem;
+.headerContainer {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  box-shadow: 0 1px 6px hsla(200, 30%, 50%, 0.4);
+}
+
+.header {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navigation {
+  flex: 1;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.main {
+  padding: 16px;
 }

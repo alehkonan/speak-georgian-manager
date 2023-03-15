@@ -1,25 +1,38 @@
-import { useState } from 'react';
-import { Button, Form, Input, Modal } from 'antd';
+import { useState, FormEvent, useRef } from 'react';
 import { useAddCategory } from 'reactQuery/categories';
-
-type FormValues = {
-  name: string;
-};
+import styles from './styles.module.css';
 
 export const AddNewCategory = () => {
   const [isOpen, setOpen] = useState(false);
-  const [form] = Form.useForm<FormValues>();
   const { addCategory, isAddingCategory } = useAddCategory();
 
-  const onFinish = (values: FormValues) => {
-    addCategory({ name: values.name });
-    setOpen(false);
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (Object.hasOwn(e.target, FormValues.Name)) {
+      console.log(e.target[FormValues.Name]);
+    }
+    // addCategory({ name: values.name });
+    // setOpen(false);
   };
 
   return (
     <div>
-      <Button onClick={() => setOpen(true)}>Add new category</Button>
-      <Modal
+      <button onClick={() => setOpen(true)}>Add new category</button>
+      <dialog open={isOpen}>
+        <button onClick={() => setOpen(false)}>Close modal</button>
+        <form className={styles.form} onSubmit={onSubmit}>
+          <label>
+            <span>Category name</span>
+            <input type="text" name={FormValues.Name} />
+          </label>
+          <label>
+            <span>sdcds name</span>
+            <input type="text" name={FormValues.Surname} />
+          </label>
+          <button>Add</button>
+        </form>
+      </dialog>
+      {/* <Modal
         title="Add a new category to the table"
         open={isOpen}
         centered
@@ -46,7 +59,7 @@ export const AddNewCategory = () => {
             <Input />
           </Form.Item>
         </Form>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

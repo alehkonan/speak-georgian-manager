@@ -1,24 +1,25 @@
-import { useWords } from '@/reactQuery/words';
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
+  ColumnDef,
 } from '@tanstack/react-table';
-import { useColumns } from './useColumns';
 import styles from './styles.module.css';
 
-export const WordsTable = () => {
-  const { words } = useWords();
-  const columns = useColumns();
+type Props<Row extends unknown> = {
+  data: Row[];
+  columns: ColumnDef<Row>[];
+};
 
+export const Table = <Row extends object>({ data, columns }: Props<Row>) => {
   const table = useReactTable({
-    data: words || [],
+    data: data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className={styles.container}>
+    <div className={styles.tableContainer}>
       <table className={styles.table}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
