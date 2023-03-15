@@ -6,9 +6,9 @@ import {
 } from '@tanstack/react-table';
 import styles from './styles.module.css';
 
-type Props<Row extends unknown> = {
+type Props<Row extends object> = {
   data: Row[];
-  columns: ColumnDef<Row>[];
+  columns: ColumnDef<Row, any>[];
 };
 
 export const Table = <Row extends object>({ data, columns }: Props<Row>) => {
