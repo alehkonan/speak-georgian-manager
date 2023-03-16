@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { WordsTable } from '@/features/WordsTable';
 import { AddNewCategory } from '@/features/AddNewCategory';
 import { AddNewWord } from '@/features/AddNewWord';
+import { Row } from '@/components/Row';
 
 const WordsPage: NextPage = () => {
   return (
@@ -17,10 +18,10 @@ const WordsPage: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{ display: 'flex', gap: '8px' }}>
+      <Row>
         <AddNewCategory />
         <AddNewWord />
-      </div>
+      </Row>
       <WordsTable />
     </>
   );

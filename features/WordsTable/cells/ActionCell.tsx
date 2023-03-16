@@ -1,3 +1,4 @@
+import { Button } from '@/components/Button';
 import { useWord } from '@/reactQuery/word';
 
 type Props = {
@@ -9,5 +10,5 @@ export const ActionCell = ({ wordId }: Props) => {
 
   if (isDeleting) return <span>Loading...</span>;
 
-  return <button onClick={() => deleteWord(wordId)}>Delete</button>;
+  return <Button onClick={() => deleteWord(wordId)}>Delete</Button>;
 };

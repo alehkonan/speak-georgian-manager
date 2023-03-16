@@ -1,11 +1,13 @@
 import type { SubmitHandler } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import ReactFocusLock from 'react-focus-lock';
+import { useForm } from 'react-hook-form';
 import { transliterate } from '@/services/transliteration';
 import { useCategories } from 'reactQuery/categories';
 import { useAddWord } from '@/reactQuery/word';
-import { useForm } from 'react-hook-form';
 import styles from './styles.module.css';
+import { Button } from '@/components/Button';
+import { Modal } from '@/components/Modal';
+import { Row } from '@/components/Row';
 
 type FormValues = {
   en: string;
@@ -42,70 +44,71 @@ export const AddNewWord = () => {
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>Add new word</button>
-      <ReactFocusLock>
-        <dialog open={isOpen} className={styles.dialog}>
-          <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label className={styles.formItem}>
-                <span>English word</span>
-                <input
-                  type="text"
-                  autoComplete="off"
-                  {...register('en', { required: true })}
-                />
-              </label>
-              {errors.en && (
-                <span className={styles.error}>English word is required</span>
-              )}
-            </div>
-            <div>
-              <label className={styles.formItem}>
-                <span>Georgian word</span>
-                <input
-                  type="text"
-                  autoComplete="off"
-                  {...register('ka', {
-                    required: true,
-                    pattern: /^[ა-ჰ_ -]*$/g,
-                  })}
-                />
-              </label>
-              {errors.ka && (
-                <span className={styles.error}>
-                  Georgian word is required and should be in georgian
-                </span>
-              )}
-            </div>
-            <div>
-              <label className={styles.formItem}>
-                <span>Transcription</span>
-                <input
-                  type="text"
-                  autoComplete="off"
-                  {...register('transcription')}
-                />
-              </label>
-            </div>
-            <div>
-              <label className={styles.formItem}>
-                <span>Category</span>
-                <select {...register('categoryId')}>
-                  {categories?.map(({ id, name }) => (
-                    <option key={id} value={id}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <div className={styles.formItem}>
-              <button type="submit">Add</button>
-              <button onClick={() => setOpen(false)}>Cancel</button>
-            </div>
-          </form>
-        </dialog>
-      </ReactFocusLock>
+      <Button onClick={() => setOpen(true)}>Add new word</Button>
+
+      <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label className={styles.formItem}>
+              <span>English word</span>
+              <input
+                type="text"
+                autoComplete="off"
+                {...register('en', { required: true })}
+              />
+            </label>
+            {errors.en && (
+              <span className={styles.error}>English word is required</span>
+            )}
+          </div>
+          <div>
+            <label className={styles.formItem}>
+              <span>Georgian word</span>
+              <input
+                type="text"
+                autoComplete="off"
+                {...register('ka', {
+                  required: true,
+                  pattern: /^[ა-ჰ_ -]*$/g,
+                })}
+              />
+            </label>
+            {errors.ka && (
+              <span className={styles.error}>
+                Georgian word is required and should be in georgian
+              </span>
+            )}
+          </div>
+          <div>
+            <label className={styles.formItem}>
+              <span>Transcription</span>
+              <input
+                type="text"
+                autoComplete="off"
+                {...register('transcription')}
+              />
+            </label>
+          </div>
+          <div>
+            <label className={styles.formItem}>
+              <span>Category</span>
+              <select {...register('categoryId')}>
+                {categories?.map(({ id, name }) => (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <Row>
+            <Button type="submit">Add</Button>
+            <Button type="button" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+          </Row>
+        </form>
+      </Modal>
     </>
   );
 };

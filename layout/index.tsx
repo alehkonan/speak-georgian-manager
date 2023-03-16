@@ -1,8 +1,10 @@
 import type { PropsWithChildren } from 'react';
 import { useSession } from '@supabase/auth-helpers-react';
-import Link from 'next/link';
 import { useNavigation } from './useNavigation';
 import { useLogout } from '@/reactQuery/logout';
+import { Button } from '@/components/Button';
+import { Link } from '@/components/Link';
+import { Row } from '@/components/Row';
 import styles from './styles.module.css';
 
 export const Layout = ({ children }: PropsWithChildren) => {
@@ -25,8 +27,10 @@ export const Layout = ({ children }: PropsWithChildren) => {
                 ))}
               </ul>
             </nav>
-            <p>logged as {session?.user?.email}</p>
-            <button onClick={() => logout()}>Logout</button>
+            <Row>
+              <p>logged as {session?.user?.email}</p>
+              <Button onClick={() => logout()}>Logout</Button>
+            </Row>
           </header>
         </div>
       )}

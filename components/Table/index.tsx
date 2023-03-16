@@ -13,7 +13,7 @@ type Props<Row extends object> = {
 
 export const Table = <Row extends object>({ data, columns }: Props<Row>) => {
   const table = useReactTable({
-    data: data,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

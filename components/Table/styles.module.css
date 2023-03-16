@@ -1,5 +1,6 @@
 .tableContainer {
   padding: 1px;
+  overflow: auto;
 }
 
 .table {
