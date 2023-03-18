@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import styles from './styles.module.css';
 
 type Props = Omit<ComponentPropsWithoutRef<'button'>, 'className'>;

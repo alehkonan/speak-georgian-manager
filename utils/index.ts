@@ -1,4 +1,5 @@
-import type { Response } from '@/typings';
+import type { SelectOption } from '@/components/Select';
+import type { Category, Response } from '@/typings';
 
 export const handleRequest = async <Data extends unknown>(
   url: RequestInfo | URL,
@@ -20,3 +21,8 @@ export const handleRequest = async <Data extends unknown>(
       return data.data;
   }
 };
+
+export const mapCategoryToOption = (category: Category): SelectOption => ({
+  value: category.id,
+  label: category.name,
+});

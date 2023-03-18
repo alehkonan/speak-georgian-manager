@@ -4,10 +4,13 @@ import { useForm } from 'react-hook-form';
 import { transliterate } from '@/services/transliteration';
 import { useCategories } from 'reactQuery/categories';
 import { useAddWord } from '@/reactQuery/word';
-import styles from './styles.module.css';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Row } from '@/components/Row';
+import { Input } from '@/components/Input';
+import { Select } from '@/components/Select';
+import { mapCategoryToOption } from '@/utils';
+import styles from '../AddNewCategory/styles.module.css';
 
 type FormValues = {
   en: string;
@@ -51,7 +54,7 @@ export const AddNewWord = () => {
           <div>
             <label className={styles.formItem}>
               <span>English word</span>
-              <input
+              <Input
                 type="text"
                 autoComplete="off"
                 {...register('en', { required: true })}
@@ -64,7 +67,7 @@ export const AddNewWord = () => {
           <div>
             <label className={styles.formItem}>
               <span>Georgian word</span>
-              <input
+              <Input
                 type="text"
                 autoComplete="off"
                 {...register('ka', {
@@ -82,7 +85,7 @@ export const AddNewWord = () => {
           <div>
             <label className={styles.formItem}>
               <span>Transcription</span>
-              <input
+              <Input
                 type="text"
                 autoComplete="off"
                 {...register('transcription')}
@@ -92,13 +95,10 @@ export const AddNewWord = () => {
           <div>
             <label className={styles.formItem}>
               <span>Category</span>
-              <select {...register('categoryId')}>
-                {categories?.map(({ id, name }) => (
-                  <option key={id} value={id}>
-                    {name}
-                  </option>
-                ))}
-              </select>
+              <Select
+                options={categories?.map(mapCategoryToOption) || []}
+                {...register('categoryId')}
+              />
             </label>
           </div>
           <Row>

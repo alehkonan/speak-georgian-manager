@@ -1,17 +1,13 @@
-import type { Category, Word } from '@/typings';
-import type { SelectOption } from '@/components/Select';
+import type { Word } from '@/typings';
 import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
 import { SelectCell, TextCell } from '@/components/Cell';
 import { useWord } from '@/reactQuery/word';
 import { useCategories } from '@/reactQuery/categories';
 import { DeleteButton } from './DeleteButton';
+import { mapCategoryToOption } from '@/utils';
 
 const columnHelper = createColumnHelper<Word>();
-const mapCategoryToOption = (category: Category): SelectOption => ({
-  value: category.id,
-  label: category.name,
-});
 
 export const useColumns = () => {
   const { updateWord } = useWord();

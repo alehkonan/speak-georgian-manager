@@ -5,6 +5,8 @@ import { useAddCategory } from 'reactQuery/categories';
 import styles from './styles.module.css';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
+import { Input } from '@/components/Input';
+import { Row } from '@/components/Row';
 
 type FormValues = {
   name: string;
@@ -33,7 +35,7 @@ export const AddNewCategory = () => {
           <div>
             <label className={styles.formItem}>
               <span>Category name</span>
-              <input
+              <Input
                 type="text"
                 autoComplete="off"
                 {...register('name', { required: true })}
@@ -43,12 +45,12 @@ export const AddNewCategory = () => {
               <span className={styles.error}>Name is required</span>
             )}
           </div>
-          <div className={styles.formItem}>
+          <Row>
             <Button type="submit">Add</Button>
             <Button type="button" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-          </div>
+          </Row>
         </form>
       </Modal>
     </>

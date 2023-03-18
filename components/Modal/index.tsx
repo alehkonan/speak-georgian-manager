@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useEffect, useRef } from 'react';
+import { PropsWithChildren, useCallback, useEffect } from 'react';
 import ReactFocusLock from 'react-focus-lock';
 import styles from './styles.module.css';
 
@@ -41,7 +41,7 @@ export const Modal = ({
   }, [isOpen]);
 
   return (
-    <ReactFocusLock disabled={!isOpen}>
+    <ReactFocusLock disabled={!isOpen} autoFocus={false}>
       <dialog
         className={styles.dialog}
         open={isOpen}
