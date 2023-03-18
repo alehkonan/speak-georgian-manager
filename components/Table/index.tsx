@@ -32,8 +32,6 @@ export const Table = <Row extends object>({ data, columns }: Props<Row>) => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  console.log(getState());
-
   return (
     <Col>
       <div className={styles.tableContainer}>

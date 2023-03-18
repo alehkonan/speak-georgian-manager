@@ -1,0 +1,12 @@
+.input {
+  display: block;
+  height: 30px;
+  padding: 4px 8px;
+  border: 2px solid hsl(0, 0%, 80%);
+  border-radius: 4px;
+}
+
+.input:read-only {
+  border: 1px solid hsl(0, 0%, 90%);
+  background-color: transparent;
+}

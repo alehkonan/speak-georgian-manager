@@ -5,7 +5,7 @@ type Props = {
   wordId: number;
 };
 
-export const ActionCell = ({ wordId }: Props) => {
+export const DeleteButton = ({ wordId }: Props) => {
   const { deleteWord, isDeleting } = useWord();
 
   if (isDeleting) return <span>Loading...</span>;

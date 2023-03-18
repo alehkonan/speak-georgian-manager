@@ -1,46 +1,71 @@
-import type { Word } from '@/typings';
+import type { Category, Word } from '@/typings';
+import type { SelectOption } from '@/components/Select';
 import { useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
-import {
-  CategoryCell,
-  EnWordCell,
-  KaWordCell,
-  PictureCell,
-  TranscriptionCell,
-} from './cells';
-import { ActionCell } from './cells/ActionCell';
+import { SelectCell, TextCell } from '@/components/Cell';
+import { useWord } from '@/reactQuery/word';
+import { useCategories } from '@/reactQuery/categories';
+import { DeleteButton } from './DeleteButton';
 
 const columnHelper = createColumnHelper<Word>();
+const mapCategoryToOption = (category: Category): SelectOption => ({
+  value: category.id,
+  label: category.name,
+});
 
 export const useColumns = () => {
+  const { updateWord } = useWord();
+  const { categories } = useCategories();
+
   const columns = useMemo(
     () => [
       columnHelper.accessor('en', {
         header: () => 'English word',
-        cell: ({ row }) => <EnWordCell word={row.original} />,
+        cell: ({ getValue, row: { original } }) => (
+          <TextCell
+            value={getValue()}
+            onChange={(value) => updateWord({ id: original.id, en: value })}
+          />
+        ),
       }),
       columnHelper.accessor('ka', {
         header: () => 'Georgian word',
-        cell: ({ row }) => <KaWordCell word={row.original} />,
+        cell: ({ getValue, row: { original } }) => (
+          <TextCell
+            value={getValue()}
+            onChange={(value) => updateWord({ id: original.id, ka: value })}
+          />
+        ),
       }),
       columnHelper.accessor('transcription', {
         header: () => 'Transcription',
-        cell: ({ row }) => <TranscriptionCell word={row.original} />,
+        cell: ({ getValue, row: { original } }) => (
+          <TextCell
+            value={getValue() || ''}
+            onChange={(value) =>
+              updateWord({ id: original.id, transcription: value || null })
+            }
+          />
+        ),
       }),
       columnHelper.accessor('categoryId', {
         header: () => 'Category',
-        cell: ({ row }) => <CategoryCell word={row.original} />,
-      }),
-      columnHelper.accessor('pictureUrl', {
-        header: () => 'Picture',
-        cell: ({ row }) => <PictureCell word={row.original} />,
+        cell: ({ getValue, row: { original } }) => (
+          <SelectCell
+            value={getValue() || undefined}
+            options={categories?.map(mapCategoryToOption)}
+            onChange={(value) =>
+              updateWord({ id: original.id, categoryId: Number(value) })
+            }
+          />
+        ),
       }),
       columnHelper.accessor('id', {
         header: () => null,
-        cell: (ctx) => <ActionCell wordId={ctx.getValue()} />,
+        cell: ({ getValue }) => <DeleteButton wordId={getValue()} />,
       }),
     ],
-    []
+    [categories, updateWord]
   );
 
   return columns;
