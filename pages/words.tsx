@@ -5,6 +5,7 @@ import { WordsTable } from '@/features/WordsTable';
 import { AddNewCategory } from '@/features/AddNewCategory';
 import { AddNewWord } from '@/features/AddNewWord';
 import { Row } from '@/components/Row';
+import { Col } from '@/components/Col';
 
 const WordsPage: NextPage = () => {
   return (
@@ -18,11 +19,14 @@ const WordsPage: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Row>
-        <AddNewCategory />
-        <AddNewWord />
-      </Row>
-      <WordsTable />
+      <Col>
+        <Row>
+          <AddNewCategory />
+          <AddNewWord />
+        </Row>
+        <hr />
+        <WordsTable />
+      </Col>
     </>
   );
 };

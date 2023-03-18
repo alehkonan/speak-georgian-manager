@@ -1,16 +1,32 @@
 .tableContainer {
-  padding: 1px;
   overflow: auto;
 }
 
 .table {
   margin: 0 auto;
+  border-collapse: collapse;
 }
 
 .row {
-  border-bottom: 1px solid #b9b9b9;
+  border-bottom: 1px solid hsl(0, 0%, 80%);
+}
+
+.row:nth-child(even) {
+  background-color: hsl(0, 0%, 97%);
 }
 
 .cell {
   padding: 4px 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media screen and (max-width: 575px) {
+  .pagination > *:not(:first-child, :last-child) {
+    display: none;
+  }
 }

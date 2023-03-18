@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useLogin } from '@/reactQuery/login';
 import { useEffect } from 'react';
 import { useSession } from '@supabase/auth-helpers-react';
 import { useRouter } from 'next/router';
+import { useLogin } from '@/reactQuery/login';
+import { Button } from '@/components/Button';
 
 const LoginPage: NextPage = () => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const LoginPage: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <button onClick={() => loginWithGoogle()}>Login with google</button>
+      <Button onClick={() => loginWithGoogle()}>Login with google</Button>
     </>
   );
 };
