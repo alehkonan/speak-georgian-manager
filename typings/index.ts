@@ -16,3 +16,11 @@ export type Word = {
   categoryId: number | null;
   transcription: string | null;
 };
+
+type Tense = 'past' | 'present' | 'future';
+type PersonalPronoun = 'firstPerson' | 'secondPerson' | 'thirdPerson';
+
+export type Verb = {
+  id: number;
+  original: string;
+} & Record<Tense, Record<PersonalPronoun, number | null>>;

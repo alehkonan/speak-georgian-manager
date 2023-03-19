@@ -1,6 +1,7 @@
+import type { GetServerSideProps, NextPage } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
+import { VerbsTable } from '@/features/VerbsTable';
 
 const VerbsPage: NextPage = () => {
   return (
@@ -14,9 +15,7 @@ const VerbsPage: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <p>Verbs</p>
-      </div>
+      <VerbsTable />
     </>
   );
 };

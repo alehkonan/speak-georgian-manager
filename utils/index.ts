@@ -1,5 +1,5 @@
 import type { SelectOption } from '@/components/Select';
-import type { Category, Response } from '@/typings';
+import type { Category, Response, Word } from '@/typings';
 
 export const handleRequest = async <Data extends unknown>(
   url: RequestInfo | URL,
@@ -25,4 +25,9 @@ export const handleRequest = async <Data extends unknown>(
 export const mapCategoryToOption = (category: Category): SelectOption => ({
   value: category.id,
   label: category.name,
+});
+
+export const mapWordToOption = (word: Word): SelectOption => ({
+  value: word.id,
+  label: word.en,
 });
