@@ -1,3 +1,4 @@
+import { CheckIcon, PencilIcon, XIcon } from '@primer/octicons-react';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { Button } from '../Button';
@@ -16,14 +17,19 @@ export const SelectCell = ({ value: initValue, options, onChange }: Props) => {
 
   const selectRef = useRef<HTMLSelectElement>(null);
 
+  const onEditClick = () => {
+    flushSync(() => setEditMode(true));
+    selectRef.current?.focus();
+  };
+
   const onChangeClick = () => {
     if (value != initValue) onChange(value);
     setEditMode(false);
   };
 
-  const onEditClick = () => {
-    flushSync(() => setEditMode(true));
-    selectRef.current?.focus();
+  const onCancelClick = () => {
+    setValue(initValue);
+    setEditMode(false);
   };
 
   if (!options) return null;
@@ -38,9 +44,17 @@ export const SelectCell = ({ value: initValue, options, onChange }: Props) => {
         options={options}
         onChange={({ target }) => setValue(target.value)}
       />
-      <Button onClick={isEditMode ? onChangeClick : onEditClick}>
-        {isEditMode ? 'Change' : 'Edit'}
+      <Button
+        title={isEditMode ? 'Save' : 'Edit'}
+        onClick={isEditMode ? onChangeClick : onEditClick}
+      >
+        {isEditMode ? <CheckIcon /> : <PencilIcon />}
       </Button>
+      {isEditMode && (
+        <Button title="Cancel" onClick={onCancelClick}>
+          <XIcon />
+        </Button>
+      )}
     </div>
   );
 };
