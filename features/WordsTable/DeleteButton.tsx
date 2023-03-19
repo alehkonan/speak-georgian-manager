@@ -1,6 +1,6 @@
+import { TrashIcon } from '@primer/octicons-react';
 import { Button } from '@/components/Button';
 import { useWord } from '@/reactQuery/word';
-import { TrashIcon } from '@primer/octicons-react';
 
 type Props = {
   wordId: number;
