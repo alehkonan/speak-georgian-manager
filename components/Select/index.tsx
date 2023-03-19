@@ -15,6 +15,7 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
   ({ options, ...props }, ref) => {
     return (
       <select ref={ref} className={styles.select} {...props}>
+        <option value={undefined}>Empty</option>
         {options.map(({ value, label }) => (
           <option key={value} value={value}>
             {label}

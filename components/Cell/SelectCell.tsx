@@ -7,8 +7,8 @@ import styles from './styles.module.css';
 
 type Props = {
   value: SelectOption['value'];
-  options?: SelectOption[];
   onChange: (value: SelectOption['value']) => void;
+  options?: SelectOption[];
 };
 
 export const SelectCell = ({ value: initValue, options, onChange }: Props) => {
