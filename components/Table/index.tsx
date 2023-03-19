@@ -40,7 +40,11 @@ export const Table = <Row extends object>({ data, columns }: Props<Row>) => {
             {getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className={styles.row}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} className={styles.cell}>
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className={styles.headerCell}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(

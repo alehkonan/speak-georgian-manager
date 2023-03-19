@@ -16,6 +16,11 @@
   background-color: hsl(0, 0%, 97%);
 }
 
+.headerCell:not(:last-child) {
+  border-right: 1px solid hsl(0, 0%, 80%);
+}
+
+.headerCell,
 .cell {
   padding: 4px 8px;
 }
