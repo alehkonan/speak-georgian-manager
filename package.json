@@ -7,12 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "supabase:login": "supabase login",
-    "supabase:init": "supabase init",
-    "supabase:link": "supabase link --project-ref sjvxbuqvopcxcdetqebf",
-    "supabase:start": "supabase start",
-    "supabase:stop": "supabase stop",
-    "supabase:generate": "supabase gen types typescript --project-id sjvxbuqvopcxcdetqebf > typings/supabase.ts"
+    "supabase:generate": "bash ./scripts/generate-types.sh"
   },
   "dependencies": {
     "@next/font": "13.1.6",

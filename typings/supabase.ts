@@ -119,6 +119,50 @@ export interface Database {
           user_id?: string
         }
       }
+      verbs: {
+        Row: {
+          created_at: string
+          first_person_in_future_word_id: number | null
+          first_person_in_past_word_id: number | null
+          first_person_in_present_word_id: number | null
+          id: number
+          original: string
+          second_person_in_future_word_id: number | null
+          second_person_in_past_word_id: number | null
+          second_person_in_present_word_id: number | null
+          third_person_in_future_word_id: number | null
+          third_person_in_past_word_id: number | null
+          third_person_in_present_word_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          first_person_in_future_word_id?: number | null
+          first_person_in_past_word_id?: number | null
+          first_person_in_present_word_id?: number | null
+          id?: number
+          original?: string
+          second_person_in_future_word_id?: number | null
+          second_person_in_past_word_id?: number | null
+          second_person_in_present_word_id?: number | null
+          third_person_in_future_word_id?: number | null
+          third_person_in_past_word_id?: number | null
+          third_person_in_present_word_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          first_person_in_future_word_id?: number | null
+          first_person_in_past_word_id?: number | null
+          first_person_in_present_word_id?: number | null
+          id?: number
+          original?: string
+          second_person_in_future_word_id?: number | null
+          second_person_in_past_word_id?: number | null
+          second_person_in_present_word_id?: number | null
+          third_person_in_future_word_id?: number | null
+          third_person_in_past_word_id?: number | null
+          third_person_in_present_word_id?: number | null
+        }
+      }
       words: {
         Row: {
           category_id: number | null
