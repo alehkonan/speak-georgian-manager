@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import styles from './styles.module.css';
@@ -20,7 +21,7 @@ export const TextCell = ({ value: initValue, onChange }: Props) => {
   };
 
   const onEditClick = () => {
-    setEditMode(true);
+    flushSync(() => setEditMode(true));
     inputRef.current?.focus();
   };
 
@@ -29,6 +30,7 @@ export const TextCell = ({ value: initValue, onChange }: Props) => {
       <Input
         ref={inputRef}
         type="text"
+        title={value}
         readOnly={!isEditMode}
         value={value}
         onChange={({ target }) => setValue(target.value)}

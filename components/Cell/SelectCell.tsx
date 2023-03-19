@@ -33,6 +33,7 @@ export const SelectCell = ({ value: initValue, options, onChange }: Props) => {
       <Select
         ref={selectRef}
         disabled={!isEditMode}
+        title={options.find((option) => option.value == value)?.label}
         value={value}
         options={options}
         onChange={({ target }) => setValue(target.value)}
