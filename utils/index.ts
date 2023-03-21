@@ -16,7 +16,7 @@ export const handleRequest = async <Data extends unknown>(
       throw new Error('Server Error');
 
     default:
-      const data: Response<Data> = await response.json();
+      const data = (await response.json()) as Response<Data>;
       if (!response.ok) throw new Error(data.errorMessage);
       return data.data;
   }
@@ -31,3 +31,13 @@ export const mapWordToOption = (word: Word): SelectOption => ({
   value: word.id,
   label: word.en,
 });
+
+type Input<T extends object> = {
+  [Key in keyof T]: T[Key];
+};
+
+export const entries = <T extends object>(object: T) =>
+  Object.entries<T[keyof T]>(object as Input<T>) as [
+    key: keyof T,
+    value: T[keyof T]
+  ][];
