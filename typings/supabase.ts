@@ -52,6 +52,32 @@ export interface Database {
           word_id?: number
         }
       }
+      phrases: {
+        Row: {
+          category_id: number | null
+          created_at: string
+          en: string
+          id: number
+          ka: string
+          transcription: string | null
+        }
+        Insert: {
+          category_id?: number | null
+          created_at?: string
+          en?: string
+          id?: number
+          ka?: string
+          transcription?: string | null
+        }
+        Update: {
+          category_id?: number | null
+          created_at?: string
+          en?: string
+          id?: number
+          ka?: string
+          transcription?: string | null
+        }
+      }
       statistics: {
         Row: {
           created_at: string

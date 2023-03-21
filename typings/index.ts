@@ -24,3 +24,11 @@ export type Verb = {
   id: number;
   original: string;
 } & Record<Tense, Record<PersonalPronoun, number | null>>;
+
+export type Phrase = {
+  id: number;
+  en: string;
+  ka: string;
+  transcription: string | null;
+  categoryId: number | null;
+};
