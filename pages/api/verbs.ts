@@ -57,6 +57,33 @@ const handler: NextApiHandler<Response<Verb[]>> = async (req, res) => {
 
       return res.json({ data: getVerbsDbResponse.data.map(mapVerb) });
 
+    case 'POST':
+      const verb = JSON.parse(req.body) as Omit<Verb, 'id'>;
+
+      const addVerbDbResponse = await supabase
+        .from('verbs')
+        .insert({
+          original: verb.original,
+          first_person_in_past_word_id: verb.past.firstPerson,
+          second_person_in_past_word_id: verb.past.secondPerson,
+          third_person_in_past_word_id: verb.past.thirdPerson,
+          first_person_in_present_word_id: verb.present.firstPerson,
+          second_person_in_present_word_id: verb.present.secondPerson,
+          third_person_in_present_word_id: verb.present.thirdPerson,
+          first_person_in_future_word_id: verb.future.firstPerson,
+          second_person_in_future_word_id: verb.future.secondPerson,
+          third_person_in_future_word_id: verb.future.thirdPerson,
+        })
+        .select();
+
+      if (addVerbDbResponse.error) {
+        return res.status(500).json({
+          errorMessage: addVerbDbResponse.error.message,
+        });
+      }
+
+      return res.json({ data: addVerbDbResponse.data.map(mapVerb) });
+
     default:
       return res.status(400).json({
         errorMessage: 'This method is not allowed',
