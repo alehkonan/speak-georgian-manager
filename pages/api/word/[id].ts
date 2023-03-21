@@ -36,7 +36,7 @@ const handler: NextApiHandler<Response<Word>> = async (req, res) => {
 
   if (req.method === 'PUT') {
     const wordId = Number(req.query.id);
-    const word: Omit<Partial<Word>, 'id'> = JSON.parse(req.body);
+    const word = JSON.parse(req.body) as Omit<Partial<Word>, 'id'>;
 
     if (!wordId) {
       return res.status(400).json({ errorMessage: 'Word id is not defined' });
