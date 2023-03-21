@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^4.24.11",
+    "@total-typescript/ts-reset": "^0.4.2",
     "@types/formidable": "^2.0.5"
   }
 }
