@@ -46,21 +46,31 @@ export const useColumns = () => {
           }),
           columnHelper.accessor('past.secondPerson', {
             header: 'Second person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    past: { secondPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
           columnHelper.accessor('past.thirdPerson', {
             header: 'Third person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    past: { thirdPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
@@ -71,66 +81,96 @@ export const useColumns = () => {
         columns: [
           columnHelper.accessor('present.firstPerson', {
             header: 'First person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    present: { firstPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
           columnHelper.accessor('present.secondPerson', {
             header: 'Second person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    present: { secondPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
           columnHelper.accessor('present.thirdPerson', {
             header: 'Third person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    present: { thirdPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
         ],
       }),
       columnHelper.group({
-        header: 'Past tense',
+        header: 'Future tense',
         columns: [
           columnHelper.accessor('future.firstPerson', {
             header: 'First person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    future: { firstPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
           columnHelper.accessor('future.secondPerson', {
             header: 'Second person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    future: { secondPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
           columnHelper.accessor('future.thirdPerson', {
             header: 'Third person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    future: { thirdPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
