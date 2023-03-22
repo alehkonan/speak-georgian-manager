@@ -6,7 +6,7 @@ type Props = {
   wordId: number;
 };
 
-export const DeleteButton = ({ wordId }: Props) => {
+export const DeleteWordButton = ({ wordId }: Props) => {
   const { deleteWord, isDeleting } = useWord();
 
   if (isDeleting) return <span>Loading...</span>;

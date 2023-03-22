@@ -4,20 +4,25 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { useWords } from '@/reactQuery/words';
 import { SelectCell, TextCell } from '@/components/Cell';
 import { mapWordToOption } from '@/utils';
+import { useUpdateVerb } from '@/reactQuery/verb';
+import { DeleteVerbButton } from './DeleteVerbButton';
 
 const columnHelper = createColumnHelper<Verb>();
 
 export const useColumns = () => {
   const { words } = useWords();
+  const { updateVerb } = useUpdateVerb();
 
   const columns = useMemo(
     () => [
       columnHelper.accessor('original', {
         header: 'Original',
-        cell: ({ getValue }) => (
+        cell: ({ getValue, row: { original } }) => (
           <TextCell
             value={getValue()}
-            onChange={(value) => console.log(value)}
+            onChange={(value) =>
+              updateVerb({ id: original.id, original: value })
+            }
           />
         ),
       }),
@@ -26,11 +31,16 @@ export const useColumns = () => {
         columns: [
           columnHelper.accessor('past.firstPerson', {
             header: 'First person',
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row: { original } }) => (
               <SelectCell
                 value={getValue() || undefined}
                 options={words?.map(mapWordToOption)}
-                onChange={(value) => console.log(value)}
+                onChange={(value) =>
+                  updateVerb({
+                    id: original.id,
+                    past: { firstPerson: Number(value) },
+                  })
+                }
               />
             ),
           }),
@@ -126,8 +136,12 @@ export const useColumns = () => {
           }),
         ],
       }),
+      columnHelper.accessor('id', {
+        header: () => null,
+        cell: ({ getValue }) => <DeleteVerbButton verbId={getValue()} />,
+      }),
     ],
-    [words]
+    [updateVerb, words]
   );
 
   return columns;

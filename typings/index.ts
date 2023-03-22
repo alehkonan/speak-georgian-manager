@@ -32,3 +32,9 @@ export type Phrase = {
   transcription: string | null;
   categoryId: number | null;
 };
+
+export type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;

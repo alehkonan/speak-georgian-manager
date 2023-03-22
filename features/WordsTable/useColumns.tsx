@@ -4,7 +4,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { SelectCell, TextCell } from '@/components/Cell';
 import { useWord } from '@/reactQuery/word';
 import { useCategories } from '@/reactQuery/categories';
-import { DeleteButton } from './DeleteButton';
+import { DeleteWordButton } from './DeleteWordButton';
 import { mapCategoryToOption } from '@/utils';
 
 const columnHelper = createColumnHelper<Word>();
@@ -58,7 +58,7 @@ export const useColumns = () => {
       }),
       columnHelper.accessor('id', {
         header: () => null,
-        cell: ({ getValue }) => <DeleteButton wordId={getValue()} />,
+        cell: ({ getValue }) => <DeleteWordButton wordId={getValue()} />,
       }),
     ],
     [categories, updateWord]
