@@ -10,3 +10,7 @@
 .link:hover {
   background-color: hsl(0, 0%, 90%);
 }
+
+.activeLink {
+  background-color: hsl(0, 0%, 90%);
+}

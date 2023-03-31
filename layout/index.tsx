@@ -6,9 +6,11 @@ import { Button } from '@/components/Button';
 import { Link } from '@/components/Link';
 import { Row } from '@/components/Row';
 import styles from './styles.module.css';
+import { useRouter } from 'next/router';
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const session = useSession();
+  const { pathname } = useRouter();
 
   const { logout, isLoading } = useLogout();
   const { navItems } = useNavigation();
@@ -22,7 +24,9 @@ export const Layout = ({ children }: PropsWithChildren) => {
               <ul className={styles.list}>
                 {navItems.map(({ id, link, label }) => (
                   <li key={id}>
-                    <Link href={link}>{label}</Link>
+                    <Link href={link} isActive={link === pathname}>
+                      {label}
+                    </Link>
                   </li>
                 ))}
               </ul>
