@@ -4,17 +4,24 @@ import {
   flexRender,
   ColumnDef,
   getPaginationRowModel,
+  getFilteredRowModel,
 } from '@tanstack/react-table';
 import { Button } from '../Button';
 import { Col } from '../Col';
+import { Search } from '../Search';
 import styles from './styles.module.css';
 
 type Props<Row extends object> = {
   data: Row[];
   columns: ColumnDef<Row, any>[];
+  hasSearch?: boolean;
 };
 
-export const Table = <Row extends object>({ data, columns }: Props<Row>) => {
+export const Table = <Row extends object>({
+  data,
+  columns,
+  hasSearch,
+}: Props<Row>) => {
   const {
     getHeaderGroups,
     getRowModel,
@@ -25,15 +32,18 @@ export const Table = <Row extends object>({ data, columns }: Props<Row>) => {
     getPageOptions,
     setPageIndex,
     getState,
+    setGlobalFilter,
   } = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
     <Col>
+      {hasSearch && <Search onSearch={setGlobalFilter} />}
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>

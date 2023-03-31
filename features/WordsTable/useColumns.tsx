@@ -34,6 +34,7 @@ export const useColumns = () => {
         ),
       }),
       columnHelper.accessor('transcription', {
+        enableGlobalFilter: false,
         header: () => 'Transcription',
         cell: ({ getValue, row: { original } }) => (
           <TextCell
@@ -45,6 +46,7 @@ export const useColumns = () => {
         ),
       }),
       columnHelper.accessor('categoryId', {
+        enableGlobalFilter: false,
         header: () => 'Category',
         cell: ({ getValue, row: { original } }) => (
           <SelectCell
@@ -57,6 +59,7 @@ export const useColumns = () => {
         ),
       }),
       columnHelper.accessor('id', {
+        enableGlobalFilter: false,
         header: () => null,
         cell: ({ getValue }) => <DeleteWordButton wordId={getValue()} />,
       }),
